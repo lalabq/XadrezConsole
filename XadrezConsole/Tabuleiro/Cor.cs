@@ -1,4 +1,4 @@
-﻿namespace ZadrezConsole.Tabuleiro
+﻿namespace tabuleiro
 {
     enum Cor
     {

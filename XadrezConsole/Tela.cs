@@ -1,5 +1,5 @@
 ﻿using System;
-using ZadrezConsole.Tabuleiro;
+using tabuleiro;
 
 namespace XadrezConsole
 {
@@ -13,7 +13,7 @@ namespace XadrezConsole
                 for (int c = 0; c < tabuleiro.Colunas; c++)
                 {
 
-                    Peca peca = tabuleiro.GetPeca(l, c);
+                    Peca peca = tabuleiro.GetPeca(new Posicao(l, c));
 
                     if (peca == null)
                     {

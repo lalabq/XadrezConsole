@@ -1,6 +1,6 @@
-﻿using ZadrezConsole.Tabuleiro;
+﻿using tabuleiro;
 
-namespace XadrezConsole.Xadrez
+namespace xadrez
 {
     class Rei : Peca
     {
