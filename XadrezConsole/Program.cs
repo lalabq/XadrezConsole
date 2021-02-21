@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tabuleiro;
 
 namespace XadrezConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+
+            Posicao p = new Posicao(3, 4);
+            Console.WriteLine(p.ToString());
+            Console.ReadLine();
+
         }
     }
 }
