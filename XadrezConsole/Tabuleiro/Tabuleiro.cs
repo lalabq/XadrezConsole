@@ -28,6 +28,21 @@
             _pecas[posicao.Linha, posicao.Coluna] = peca;
         }
 
+        public Peca RetirarPeca(Posicao posicao)
+        {
+
+            var peca = GetPeca(posicao);
+
+            if (peca != null)
+            {
+                peca.Posicao = null;
+                _pecas[posicao.Linha, posicao.Coluna] = null;
+            }
+
+            return peca;
+
+        }
+
         public bool PosicaoValida(Posicao posicao)
         {
             if (posicao.Linha < 0 || posicao.Linha >= Linhas || posicao.Coluna < 0 || posicao.Coluna >= Colunas)

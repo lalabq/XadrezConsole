@@ -1,5 +1,6 @@
 ﻿using System;
 using tabuleiro;
+using xadrez;
 
 namespace XadrezConsole
 {
@@ -51,6 +52,19 @@ namespace XadrezConsole
                 Console.Write(peca);
             }
 
+        }
+
+        /// <summary>
+        /// Cria uma PosicaoXadrez a partir da posição que o usuário digitar, como por exemplo "A1".
+        /// </summary>
+        public static PosicaoXadrez LerPosicaoXadrez()
+        {
+            string posicaoString = Console.ReadLine();
+
+            char coluna = posicaoString[0];
+            int linha = int.Parse(posicaoString[1] + "");
+
+            return new PosicaoXadrez(coluna, linha);
         }
 
     }
