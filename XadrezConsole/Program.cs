@@ -11,17 +11,23 @@ namespace XadrezConsole
 
             try
             {
-
+               
                 PartidaDeXadrez partida = new PartidaDeXadrez();
 
                 while (!partida.Terminada)
                 {
 
+                    var nenhumMovimentoPossivel = new bool[partida.Tabuleiro.Linhas, partida.Tabuleiro.Colunas];
+
                     Console.Clear();
-                    Tela.ImprimirTabuleiro(partida.Tabuleiro);
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro, nenhumMovimentoPossivel);
 
                     Console.Write("Origem: ");
                     Posicao origem = Tela.LerPosicaoXadrez().ConverterParaPosicao();
+
+                    bool[,] posicoesPossiveis = partida.Tabuleiro.GetPeca(origem).GetMovimentosPossiveis();
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
 
                     Console.Write("Destino: ");
                     Posicao destino = Tela.LerPosicaoXadrez().ConverterParaPosicao();

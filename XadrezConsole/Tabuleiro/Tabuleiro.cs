@@ -16,6 +16,7 @@
 
         public Peca GetPeca(Posicao posicao)
         {
+            ValidarPosicao(posicao);
             return _pecas[posicao.Linha, posicao.Coluna];
         }
 
@@ -26,6 +27,7 @@
                 throw new TabuleiroException("Já existe uma peça nessa posição.");
             }
             _pecas[posicao.Linha, posicao.Coluna] = peca;
+            peca.Posicao = posicao;
         }
 
         public Peca RetirarPeca(Posicao posicao)
@@ -43,6 +45,9 @@
 
         }
 
+        /// <summary>
+        /// Verifica se a posição submetida está dentro do tabuleiro.
+        /// </summary>
         public bool PosicaoValida(Posicao posicao)
         {
             if (posicao.Linha < 0 || posicao.Linha >= Linhas || posicao.Coluna < 0 || posicao.Coluna >= Colunas)
