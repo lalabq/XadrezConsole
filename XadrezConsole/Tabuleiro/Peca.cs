@@ -27,6 +27,40 @@
             return peca == null || peca.Cor != Cor;
         }
 
+        /// <summary>
+        /// Verifica se existe pelo menos um movimento possível para esta peça no contexto atual.
+        /// </summary>
+        public bool ExisteMovimentosPossiveis()
+        {
+
+            bool[,] matriz = GetMovimentosPossiveis();
+
+            for (int l = 0; l < Tabuleiro.Linhas; l++)
+            {
+                for (int c = 0; c < Tabuleiro.Colunas; c++)
+                {
+                    if (matriz[l, c])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
+        }
+
+        /// <summary>
+        /// Verifica se a peça pode se mover para determinada posição.
+        /// </summary>
+        /// <param name="posicao">Posição de destino</param>
+        /// <returns></returns>
+        public bool PodeMoverPara(Posicao posicao)
+        {
+            bool[,] matriz = GetMovimentosPossiveis();
+            return matriz[posicao.Linha, posicao.Coluna];
+        }
+
         public abstract bool[,] GetMovimentosPossiveis();
 
     }
