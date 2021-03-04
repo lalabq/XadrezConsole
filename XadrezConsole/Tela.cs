@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using tabuleiro;
 using xadrez;
 
@@ -6,6 +7,34 @@ namespace XadrezConsole
 {
     class Tela
     {
+
+        public static void ImprimirPartida(PartidaDeXadrez partida)
+        {
+            var nenhumMovimentoPossivel = new bool[partida.Tabuleiro.Linhas, partida.Tabuleiro.Colunas];
+            Tela.ImprimirTabuleiro(partida.Tabuleiro, nenhumMovimentoPossivel);
+            ImprimirPecasCapturadas(partida);
+            Console.WriteLine("Turno: " + partida.Turno + ".\nAguardando jogada: " + partida.JogadorAtual + ".\n");
+        }
+
+        public static void ImprimirPecasCapturadas(PartidaDeXadrez partida)
+        {
+            Console.WriteLine("Peças capturadas: ");
+            Console.Write("Brancas: ");
+            ImprimirConjunto(partida.GetPecasCapturadas(Cor.Branca));
+            Console.Write("Pretas: ");
+            ImprimirConjunto(partida.GetPecasCapturadas(Cor.Preta));
+            Console.WriteLine();
+        }
+
+        public static void ImprimirConjunto(HashSet<Peca> conjunto)
+        {
+            Console.Write("[ ");
+            foreach (Peca peca in conjunto)
+            {
+                ImprimirPeca(peca, false);
+            }
+            Console.Write("]\n");
+        }
 
         public static void ImprimirTabuleiro(Tabuleiro tabuleiro, bool[,] posicoesPossiveis)
         {

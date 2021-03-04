@@ -21,9 +21,7 @@ namespace XadrezConsole
                     {
 
                         Console.Clear();
-                        var nenhumMovimentoPossivel = new bool[partida.Tabuleiro.Linhas, partida.Tabuleiro.Colunas];
-                        Tela.ImprimirTabuleiro(partida.Tabuleiro, nenhumMovimentoPossivel);
-                        Console.WriteLine("Turno: " + partida.Turno + ".\nAguardando jogada: " + partida.JogadorAtual + ".\n");
+                        Tela.ImprimirPartida(partida);
 
                         Console.Write("Origem: ");
                         Posicao origem = Tela.LerPosicaoXadrez().ConverterParaPosicao();

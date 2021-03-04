@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using tabuleiro;
 
 namespace xadrez
@@ -10,6 +10,8 @@ namespace xadrez
         public bool Terminada { get; private set; }
         public int Turno { get; private set; }
         public Cor JogadorAtual { get; private set; }
+        private HashSet<Peca> _pecasDaPartida { get; set; }
+        private HashSet<Peca> _pecasCapturadas { get; set; }
 
         public PartidaDeXadrez()
         {
@@ -18,21 +20,67 @@ namespace xadrez
             Terminada = false;
             Turno = 1;
             JogadorAtual = Cor.Branca;
+            _pecasDaPartida = new HashSet<Peca>();
+            _pecasCapturadas = new HashSet<Peca>();
 
             ColocarPecas();
 
         }
 
+        /// <summary>
+        /// Retorna as peças capturadas de determinada cor.
+        /// </summary>
+        public HashSet<Peca> GetPecasCapturadas(Cor cor)
+        {
+            var retorno = new HashSet<Peca>();
+
+            foreach (var peca in _pecasCapturadas)
+            {
+                if (peca.Cor == cor)
+                {
+                    retorno.Add(peca);
+                }
+            }
+
+            return retorno;
+        }
+
+        /// <summary>
+        /// Retorna as peças em jogo de determinada cor.
+        /// </summary>
+        public HashSet<Peca> GetPecasEmJogo(Cor cor)
+        {
+            var retorno = new HashSet<Peca>();
+
+            foreach (var peca in _pecasDaPartida)
+            {
+                if (peca.Cor == cor)
+                {
+                    retorno.Add(peca);
+                }
+            }
+
+            retorno.ExceptWith(GetPecasCapturadas(cor));
+
+            return retorno;
+        }
+
+        public void ColocarNovaPeca(char coluna, int linha, Peca peca)
+        {
+            Tabuleiro.ColocarPeca(peca, new PosicaoXadrez(coluna, linha).ConverterParaPosicao());
+            _pecasDaPartida.Add(peca);
+        }
+
         public void ColocarPecas()
         {
 
-            Tabuleiro.ColocarPeca(new Torre(Cor.Preta, Tabuleiro), new PosicaoXadrez('A', 8).ConverterParaPosicao());
-            Tabuleiro.ColocarPeca(new Torre(Cor.Preta, Tabuleiro), new PosicaoXadrez('H', 8).ConverterParaPosicao());
-            Tabuleiro.ColocarPeca(new Rei(Cor.Preta, Tabuleiro), new PosicaoXadrez('D', 8).ConverterParaPosicao());
+            ColocarNovaPeca('A', 8, new Torre(Cor.Preta, Tabuleiro));
+            ColocarNovaPeca('H', 8, new Torre(Cor.Preta, Tabuleiro));
+            ColocarNovaPeca('D', 8, new Rei(Cor.Preta, Tabuleiro));
 
-            Tabuleiro.ColocarPeca(new Torre(Cor.Branca, Tabuleiro), new PosicaoXadrez('A', 1).ConverterParaPosicao());
-            Tabuleiro.ColocarPeca(new Torre(Cor.Branca, Tabuleiro), new PosicaoXadrez('H', 1).ConverterParaPosicao());
-            Tabuleiro.ColocarPeca(new Rei(Cor.Branca, Tabuleiro), new PosicaoXadrez('E', 1).ConverterParaPosicao());
+            ColocarNovaPeca('A', 1, new Torre(Cor.Branca, Tabuleiro));
+            ColocarNovaPeca('H', 1, new Torre(Cor.Branca, Tabuleiro));
+            ColocarNovaPeca('E', 1, new Rei(Cor.Branca, Tabuleiro));
 
         }
 
@@ -96,6 +144,10 @@ namespace xadrez
             peca.AdicionarMovimento();
 
             Peca pecaCapturada = Tabuleiro.RetirarPeca(destino);
+            if (pecaCapturada != null)
+            {
+                _pecasCapturadas.Add(pecaCapturada);
+            }
             Tabuleiro.ColocarPeca(peca, destino);
 
         }
