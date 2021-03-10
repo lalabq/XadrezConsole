@@ -16,9 +16,14 @@
             Tabuleiro = tabuleiro;
         }
 
-        public void AdicionarMovimento()
+        public void IncrementarMovimento()
         {
             QtdeMovimentos++;
+        }
+
+        public void DecrementarMovimento()
+        {
+            QtdeMovimentos--;
         }
 
         public bool PodeMover(Posicao posicao)
