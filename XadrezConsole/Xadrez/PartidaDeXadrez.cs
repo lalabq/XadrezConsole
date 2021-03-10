@@ -157,8 +157,55 @@ namespace xadrez
                 Xeque = false;
             }
 
+            // Se o jogador atual realizou um xeque mate
+            if (TestarXequeMate(GetCorAdversaria(JogadorAtual)))
+            {
+                Terminada = true;
+                return;
+            }
+
             Turno++;
             MudarJogador();
+        }
+
+        /// <summary>
+        /// Verifica se a cor atual sofreu xeque mate.
+        /// </summary>
+        public bool TestarXequeMate(Cor cor)
+        {
+            if (!EstaEmXeque(cor))
+            {
+                return false;
+            }
+
+            // Não necessariamente o rei precisa se mover para sair do xeque,
+            // pode ser outra peça que vai bloquear a captura dele
+            foreach (Peca peca in GetPecasEmJogo(cor))
+            {
+                bool[,] matriz = peca.GetMovimentosPossiveis();
+                for (int l = 0; l < Tabuleiro.Linhas; l++)
+                {
+                    for (int c = 0; c < Tabuleiro.Colunas; c++)
+                    {
+                        if (matriz[l, c])
+                        {
+                            Posicao origem = peca.Posicao;
+                            Posicao destino = new Posicao(l, c);
+
+                            Peca pecaCapturada = ExecutarMovimento(origem, destino);
+                            bool testeXeque = EstaEmXeque(cor);
+                            DesfazerMovimento(origem, destino, pecaCapturada);
+
+                            if (!testeXeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
